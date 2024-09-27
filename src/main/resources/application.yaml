@@ -1,0 +1,57 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      default-filters:
+        - AddResponseHeader=X-Response-Time, "#{T(java.time.LocalDateTime).now()}"
+      routes:
+        - id: saldo-service
+          uri: https://d561407b-50bb-4749-af23-334ad8b84ead.mock.pstmn.io
+          predicates:
+            - Path=/saldo/**
+          filters:
+            - StripPrefix=1
+
+        - id: cartao-service
+          uri: https://d561407b-50bb-4749-af23-334ad8b84ead.mock.pstmn.io
+          predicates:
+            - Path=/cartao/**
+          filters:
+            - StripPrefix=1
+
+        - id: emprestimo-service
+          uri: https://d561407b-50bb-4749-af23-334ad8b84ead.mock.pstmn.io
+          predicates:
+            - Path=/emprestimo/**
+          filters:
+            - StripPrefix=1
+
+        - id: pagamento-service
+          uri: https://d561407b-50bb-4749-af23-334ad8b84ead.mock.pstmn.io
+          predicates:
+            - Path=/pagamento/**
+          filters:
+            - StripPrefix=1
+
+        - id: dados-cliente-service
+          uri: https://d561407b-50bb-4749-af23-334ad8b84ead.mock.pstmn.io
+          predicates:
+            - Path=/dados-cliente/**
+          filters:
+            - StripPrefix=1
+
+        - id: configuracoes-service
+          uri: https://d561407b-50bb-4749-af23-334ad8b84ead.mock.pstmn.io
+          predicates:
+            - Path=/configuracoes/**
+          filters:
+            - StripPrefix=1
+
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
